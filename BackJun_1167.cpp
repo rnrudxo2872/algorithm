@@ -8,12 +8,12 @@ typedef long long ll;
 
 vector<pair<int, int>> v[100001];
 bool visit[100001] = { 0, };
-ll max_num = 0, max_node = 1;
+ll max_num = 0, max_node = 0;
+ll tem = 0;
 
-void dfs(int start, int tem) {
+void dfs(int start) {
 	if (visit[start] == true)
 		return;
-
 	
 	if (tem > max_num) {
 		max_num = tem;
@@ -23,7 +23,9 @@ void dfs(int start, int tem) {
 	visit[start] = true;
 
 	for (int i = 0; i < v[start].size(); i++) {
+		tem += v[start][i].second;
 		dfs(v[start][i].first, tem + v[start][i].second);
+		tem -= v[start][i].second;
 	}
 }
 
@@ -47,11 +49,11 @@ int main() {
 		}
 	}
 
-	dfs(1, 0);
+	dfs(1);
 
 	fill(visit, visit + N, 0);
 
-	dfs(max_node, 0);
+	dfs(max_node);
 
 	cout << max_num;
 }
