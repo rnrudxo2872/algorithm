@@ -1,0 +1,36 @@
+git init
+git remote add origin (address)
+(원래 업데이트 파일이 있을 시,)git pull origin master
+git status
+git add .
+git commit -m "message"
+git push origin master
+
+삭제한 파일 복구
+git status ( => 어떤게 삭제 되었는가?)
+git ls-files -d | xargs git checkout (=> 모든 파일 복구)
+---> 따로따로 하나씩 복구하는게 있으나, 나는 잘 작동하지 않았다.
+
+
+https://joshua1988.github.io/web-development/javascript/promise-for-beginners/
+진도 : https://opentutorials.org/course/3387/21741
+
+-todolist : https://hang95-coding.tistory.com/11
+
+-저작권 없는 이미지 사이트 : https://unsplash.com/
+
+-동기 비동기 : https://opentutorials.org/course/3332/21132
+
+-API : https://opentutorials.org/course/3332/21152
+
+https://dev-csa.github.io/
+
+-rest api
+-db
+-sync 동기 비동기
+-리눅스 커널
+
+cookie -> webstorage
+wire shark
+
+- json 파일로 저장하는 법 : https://potensj.tistory.com/m/99
