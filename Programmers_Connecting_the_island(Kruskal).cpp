@@ -17,7 +17,7 @@ int Find_parent(int Node) {
 bool Same_parent(int Cur, int Next) {
     int Cur_parent = Find_parent(Cur);
     int Next_parent = Find_parent(Next);
-    
+
     if (Cur_parent != Next_parent)
         return false;
     else
@@ -35,7 +35,7 @@ int solution(int n, vector<vector<int>> costs) {
     int answer = 0;
     for (int i = 0; i < n; i++)
         parent[i] = i;
-    
+
     for (int i = 0; i < costs.size(); i++) {
         int node = costs[i][0];
         int next = costs[i][1];
@@ -50,7 +50,7 @@ int solution(int n, vector<vector<int>> costs) {
         int CurNode = Cost[i].second.first;
         int CurNext = Cost[i].second.second;
 
-        if (Same_parent(CurNode,CurNext) == false) {
+        if (Same_parent(CurNode, CurNext) == false) {
             Union(CurNode, CurNext);
             answer += CurCost;
         }
