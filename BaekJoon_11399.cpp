@@ -1,71 +1,102 @@
 #include <iostream>
-#include <vector>
+#include <string>
+#include <math.h>
 
 using namespace std;
 
 int N;
-vector<int> Dum_arr;
+string arr[11];
+pair<long long, int> Alpha_Cnt[27];
+int Size = 0;
+pair<long long, int> Dummy[27];
 
-void merge(vector<int>& v, int start, int mid, int end) {
+void merge(int start, int mid, int end) {
 	int i = start;
 	int j = mid + 1;
 	int k = start;
 
 	while (i <= mid && j <= end) {
-		if (v[i] < v[j]) {
-			Dum_arr[k] = v[i];
-			i++;
+		if (Alpha_Cnt[i].first < Alpha_Cnt[j].first) {
+			Dummy[k] = Alpha_Cnt[j];
+			j++;
 		}
 		else {
-			Dum_arr[k] = v[j];
-			j++;
+			Dummy[k] = Alpha_Cnt[i];
+			i++;
 		}
 		k++;
 	}
-
 	if (i > mid) {
 		for (int z = j; z <= end; z++) {
-			Dum_arr[k] = v[z];
+			Dummy[k] = Alpha_Cnt[z];
 			k++;
 		}
 	}
 	else {
 		for (int z = i; z <= mid; z++) {
-			Dum_arr[k] = v[z];
+			Dummy[k] = Alpha_Cnt[z];
 			k++;
 		}
 	}
 
-	for (int z = start; z <= end; z++)
-		v[z] = Dum_arr[z];
+	for (int z = start; z <= end; z++) {
+		Alpha_Cnt[z] = Dummy[z];
+	}
 }
 
-void merge_sort(vector<int>& v, int start, int end) {
-	if (Dum_arr.size() == 0)
-		Dum_arr.resize(N);
+void merge_sort(int start, int end) {
 	if (start < end) {
 		int mid = (start + end) / 2;
-		merge_sort(v, start, mid);
-		merge_sort(v, mid + 1, end);
-		merge(v, start, mid, end);
+		merge_sort(start, mid);
+		merge_sort(mid + 1, end);
+		merge(start, mid, end);
 	}
 }
 
-int main() {
-	vector <int> arr;
-	scanf_s("%d", &N);
-	arr.resize(N);
-	
-	for (int i = 0; i < N; i++)
-		scanf_s("%d", &arr[i]);
+void init() {
+	ios::sync_with_stdio(false);
+	cin.tie(); cout.tie();
+}
 
-	merge_sort(arr,0,arr.size() - 1);
+int main(){
+	init();
 
-	int sum = 0;
-	int temp = 0;
+	cin >> N;
 	for (int i = 0; i < N; i++) {
-		temp += arr[i];
-		sum += temp;
-	cout << sum << endl;
+		cin >> arr[i];
+		int len = arr[i].length();
+		for (int j = 1; j <= len; j++) {
+			int idx = arr[i][len - j] - 'A';
+			if (Alpha_Cnt[idx].first == 0) // 알파벳 개수를 구한다.
+			{
+				Size++;
+				Alpha_Cnt[idx].second = idx;
+			}
+			Alpha_Cnt[idx].first += pow(10,j); // 알파 우선권 더함.
+		}
 	}
+
+	merge_sort(0, 26);
+	int Cur_num = 9;
+	int idx_num[27] = { 0, };
+	
+	for (int i = 0; i < Size; i++) {
+		idx_num[Alpha_Cnt[i].second] = Cur_num;
+		Cur_num--;
+	}
+
+	long long ans = 0;
+	for (int i = 0; i < N; i++) {
+		int len = arr[i].length();
+		string temp = "";
+		
+		for (int j = 0; j < len; j++) {
+			int idx = arr[i][j] - 'A';
+			temp += to_string(idx_num[idx]);
+		}
+		
+		ans += stoi(temp);
+	}
+
+	printf("%lld", ans);
 }
