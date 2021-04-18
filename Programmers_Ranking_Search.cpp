@@ -44,21 +44,6 @@ vector<int> solution(vector<string> info, vector<string> query) {
             }
         }
     }
-    /*for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 2; j++) {
-            for (int k = 0; k < 2; k++) {
-                for (int z = 0; z < 2; z++) {
-                    for (int q = 0; q < Map[i][j][k][z].size(); q++)
-                        cout << Map[i][j][k][z][q] << " ";
-                cout << endl;
-                }
-            }
-        }
-    }*/
-    //int lang; //0 cpp, 1 java, 2 python 
-    //int position; //0 backend, 1 frontend
-    //int expert; //0 junior, 1 senior
-    //int food; //0 chicken, 1 pizza
 
     for (string str : query) {
         istringstream querySplit(str);
