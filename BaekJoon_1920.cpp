@@ -1,47 +1,56 @@
-#include<iostream>
-#include<vector>
-#include<algorithm>
+#include<bits/stdc++.h>
 
 using namespace std;
 
-int N[100001], M[100001];
+int N, M;
+vector<int> A;
+vector<int> ans;
 
-void search(int *arr, int tem, int start, int end) {
-	
-	int mid = (start + end) / 2;
+bool Binary_search(int find) {
+	int left = 0;
+	int right = N - 1;
+	int mid = 0;
+	int ret = N - 1;
 
-	if (start > end) {
-		cout << 0 << "\n";
-	}
-	else if (arr[mid] > tem) {
-			search(arr, tem, start, mid - 1);
+	while (left <= right) {
+		mid = (left + right) / 2;
+
+		if (A[mid] == find)
+			return true;
+
+		if (A[mid] > find) {
+			right = mid - 1;
 		}
-	else if (arr[mid] < tem) {
-			search(arr, tem, mid + 1, end);
+		else {
+			left = mid + 1;
 		}
-	else {
-		cout << 1 << "\n";
-		return;
 	}
-	}
+
+	return false;
+}
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	cout.tie(0);
+	scanf_s("%d", &N);
+	A.resize(N);
 
-	int Case = 0, num = 0, mcase = 0;
-
-	cin >> Case;
-	for (int i = 0; i < Case; i++) {
-		cin >> N[i];
+	for (int i = 0; i < N; i++) {
+		scanf_s("%d", &A[i]);
 	}
-	sort(N, N + Case);
 
-	cin >> mcase;
-	
-	for (int i = 0; i < mcase; i++) {
-		cin >> M[i];
-		search(N, M[i], 0, Case - 1);
+	// A오름차순
+	sort(A.begin(), A.end());
+
+	scanf_s("%d", &M);
+
+	for (int i = 0; i < M; i++) {
+		int find;
+
+		scanf_s("%d", &find);
+
+		bool pos = Binary_search(find);
+		ans.push_back(pos);
 	}
+
+	for (int ret : ans)
+		printf("%d\n", ret);
 }
