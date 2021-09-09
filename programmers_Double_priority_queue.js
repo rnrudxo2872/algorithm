@@ -47,12 +47,7 @@ function inputQueue (num) {
 }
 
 function solution(operations) {
-    let answer = [];
-    
-    
-    const divItem = operations.map((element) => element.split(' '))
-    
-    divItem.map(([oper, num]) => {
+    operations.map((element) => element.split(' ')).map(([oper, num]) => {
             if(oper === 'I') {
                 inputQueue(Number(num));
             }
