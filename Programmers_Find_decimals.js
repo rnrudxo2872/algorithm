@@ -6,7 +6,7 @@ const isPrime = (n) => {
     if(n <= 1 || n % 2 === 0 || n % 3 === 0) return false;
     
     let div = 3;
-    while(n > div){
+    while(Math.sqrt(n) >= div){
         if(n % div === 0) return false;
         div += 2;
     }
