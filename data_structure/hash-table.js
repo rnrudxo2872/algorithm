@@ -62,15 +62,3 @@ function HashTable (n) {
 }
 
 const testTable = new HashTable(4);
-
-testTable.put('first', '간달프');
-testTable.put('first', '프프라');
-testTable.put('0', 'ee')
-testTable.put('1', 'ee')
-testTable.put('2', 'ee')
-testTable.put('3', 'ee')
-testTable.put('5', 'ee')
-testTable.put('4', 'ee')
-
-console.log('삭제된 node => ',testTable.remove('1'))
-console.log(testTable.get('1'))
