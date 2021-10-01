@@ -8,6 +8,14 @@ function LinkedList () {
         this.next = next || null;
     }
 
+    this.addFirst = function (data) {
+        let newNode = new Node(data,this.head);
+        this.size++;
+        this.head = newNode;
+
+        return this.head;
+    }
+
     this.add = function (data) {
         let newNode = new Node(data);
         this.size++;
@@ -88,6 +96,7 @@ function LinkedList () {
         while(curNode) {
             if(curIdx === index) {
                 previousNode.next = curNode.next;
+                this.size--;
                 return curNode;
             }
 
@@ -108,6 +117,7 @@ function LinkedList () {
         while(curNode) {
             if(curNode.data === data) {
                 previousNode.next = curNode.next;
+                this.size--;
                 return {index:curIdx, node:curNode};
             }
 
@@ -116,7 +126,8 @@ function LinkedList () {
             curNode = curNode.next;
         }
 
-
         return curNode;
     }
 }
+
+module.exports = LinkedList;

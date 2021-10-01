@@ -1,7 +1,9 @@
+const LinkedList = require("./linked-list");
+
 function HashTable (n) {
     if(!n) throw new Error('n은 필수 입니다.');
 
-    this.table = Array.from({length:n}, () => []);
+    this.table = Array.from({length:n}, () => new LinkedList());
 
     function Node(key, value) {
         if(key == null || value == null) throw new Error('잘못된 정보값 입니다.')
@@ -21,44 +23,54 @@ function HashTable (n) {
         return getHash(key) % memorySize;
     }
 
-    function findIndexHandler (node) {
-        return node.key === this.toString()
+    function searchData (key, list) {
+        let curNode = list.head;
+        let index = 0;
+
+        while(curNode) {
+            if(curNode.data.key === key) {
+                return {index:index, data:curNode.data};
+            }
+            index++;
+            curNode = curNode.next;
+        }
+        return curNode;
     }
 
     this.put = function (key, value) {
         const indexOfMemory = hashToIndex(key, this.table.length);
-        const findIdx = this.table[indexOfMemory].findIndex(findIndexHandler.bind(key));
+        let searchResult = searchData(key, this.table[indexOfMemory]);
 
-        if(findIdx === -1) {
-            const lengthAfterInsert = this.table[indexOfMemory].push(new Node(key,value));
-            return this.table[indexOfMemory][lengthAfterInsert - 1];
+        if(!searchResult) {
+            const nowNode = new Node(key,value);
+
+            this.table[indexOfMemory].addFirst(nowNode);
+            return nowNode;
         }
 
-        this.table[indexOfMemory][findIdx].value = value;
-        return this.table[indexOfMemory][findIdx];
+        searchResult.data.value = value;
+        return searchResult.data;
     }
 
     this.get = function (key) {
         const indexOfMemory = hashToIndex(key, this.table.length);
-        const findIdx = this.table[indexOfMemory].findIndex(findIndexHandler.bind(key));
+        let searchResult = searchData(key, this.table[indexOfMemory]);
 
-        if(findIdx === -1) {
+        if(!searchResult) {
             return -1;
         }
 
-        return this.table[indexOfMemory][findIdx].value;
+        return searchResult.data.value;
     }
 
     this.remove = function (key) {
         const indexOfMemory = hashToIndex(key, this.table.length);
-        const findIdx = this.table[indexOfMemory].findIndex(findIndexHandler.bind(key));
+        let searchResult = searchData(key, this.table[indexOfMemory]);
 
-        if(findIdx === -1) {
+        if(!searchResult) {
             throw new Error('해당 key는 존재하지 않습니다.')
         }
 
-        return this.table[indexOfMemory].splice(findIdx,1);
+        return this.table[indexOfMemory].remove(searchResult.index);
     }
 }
-
-const testTable = new HashTable(4);
