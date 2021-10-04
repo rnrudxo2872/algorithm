@@ -1,0 +1,1 @@
+const solution = (abs,signs) => abs.reduce((ret,val,idx) => signs[idx] ? ret + val : ret - val,0)
