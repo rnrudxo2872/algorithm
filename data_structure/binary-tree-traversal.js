@@ -26,9 +26,29 @@ function Tree () {
             this.inOrder(node.right,arr);
         }
     }
+
+    this.preOrder = function (node,arr) {
+        if(node != null) {
+            arr.push(node.data);
+            this.preOrder(node.left,arr);
+            this.preOrder(node.right,arr);
+        }
+    }
+
+    this.postOrder = function (node,arr) {
+        if(node != null) {
+            this.postOrder(node.left,arr);
+            this.postOrder(node.right,arr);
+            arr.push(node.data);
+        }
+    }
 }
 
-//inOrder
+/*
+            (1)
+    (2)             (3)
+(4)    (5)
+*/
 const tree = new Tree();
 
 const n5 = tree.makeNode(5);
@@ -38,6 +58,17 @@ const n2 = tree.makeNode(2,n4,n5);
 const n1 = tree.makeNode(1,n2,n3);
 tree.setRoot(n1);
 
-let arr = [];
-tree.inOrder(tree.getRoot(),arr)
-arr.forEach(val => console.log(val))
+//inOrder - left, root, right
+let inOrderArr = [];
+tree.inOrder(tree.getRoot(),inOrderArr)
+console.log(inOrderArr.join());
+
+//preOrder - root, left, right
+let preOrderArr = [];
+tree.preOrder(tree.getRoot(),preOrderArr);
+console.log(preOrderArr.join());
+
+//postOrder - left, right, root
+let postOrderArr = [];
+tree.postOrder(tree.getRoot(), postOrderArr);
+console.log(postOrderArr.join());
