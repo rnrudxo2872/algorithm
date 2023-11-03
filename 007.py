@@ -1,14 +1,13 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/169199
 
 def bfs(board, ri, ci):
-    visit = [[False for _ in range(len(board[0]))] for _ in range(len(board))]
+    visit = set()
     delPos = [[0, 1], [0, -1], [1, 0], [-1, 0]]
     queue = [[ri, ci, 0]];
     
     while queue:
         [row, col, count] = queue.pop(0)
-        visit[row][col] = True
-        print(row, col, count, board[row][col])
+        visit.add((row, col))
         
         if board[row][col] == "G":
             return count
@@ -23,7 +22,7 @@ def bfs(board, ri, ci):
                     rowPos -= delRow
                     colPos -= delCol
                     break
-            if visit[rowPos][colPos]:
+            if (rowPos, colPos) in visit:
                 continue
                 
             queue.append([rowPos,colPos,count+1])
